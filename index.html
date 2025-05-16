@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>StopWatch</h1>
+    <div id="time">00:00</div>
+
+    <button onclick="start()">Start</button>
+    <button onclick="stop()">Stop</button>
+    <button onclick="reset()">Reset</button>
+
+    <script>
+      let milliseconds = 0;
+      let seconds = 0;
+      let timer = null;
+
+      function updateTime() {
+        let ms = milliseconds < 10 ? "0" + milliseconds : milliseconds;
+        let sec = seconds < 10 ? "0" + seconds : seconds;
+        document.getElementById("time").innerText = `${sec}:${ms}`;
+      }
+
+      function start() {
+        if (timer !== null) return;
+        timer = setInterval(() => {
+          milliseconds++;
+          if (milliseconds > 99) {
+            milliseconds = 0;
+            seconds++;
+          }
+          updateTime();
+        }, 10);
+      }
+
+      function stop() {
+        clearInterval(timer);
+        timer = null;
+      }
+      function reset() {
+        stop();
+        milliseconds = 0;
+        seconds = 0;
+        updateTime();
+      }
+    </script>
+  </body>
+</html>
