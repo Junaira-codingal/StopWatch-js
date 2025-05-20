@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ShortBreak</title>
+    <style>
+      body {
+        background: linear-gradient(
+          to right,
+          #ecd3e9,
+          #9ab6e5,
+          #caae84,
+          #d7886f,
+          #73c7c8
+        );
+        text-align: center;
+        font-family: "Courier New", Courier, monospace;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      #sections {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin-bottom: 30px;
+      }
+      a:hover {
+        color: #792f2f;
+        box-shadow: 0 0 5px #ff9e69;
+      }
+      hr {
+        height: 3px;
+        background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+        box-shadow: 0 0 10px #a6c1ee;
+        margin: 0;
+      }
+      #time {
+        font-size: 5rem;
+        font-weight: bold;
+        color: #c97575e9;
+        text-shadow: 0 0 10px #532a2a;
+      }
+      #time:hover {
+        text-shadow: 0 0 10px #b58066;
+      }
+      button {
+        color: #462019;
+        font-weight: bold;
+        background-color: rgba(238, 226, 166, 0.16);
+        border: none;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+      }
+      button:hover {
+        color: #462019;
+        font-weight: bold;
+        background-color: rgba(238, 226, 166, 0.16);
+        border: none;
+        padding: 20px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>StudyTracker</h1>
+    <hr />
+    <div id="sections">
+      <h2><a href="promodoro.html">Promodoro</a></h2>
+      <h2><a href="shortbreak.html">ShortBreak</a></h2>
+      <h2><a href="longBreak.html">LongBreak</a></h2>
+    </div>
+    <div id="time">15:00</div>
+    <button onclick="start()">Start</button>
+    <button onclick="stop()">Stop</button>
+    <script>
+      let seconds = 0;
+      let minutes = 15;
+      let timer = null;
+
+      function updateTime() {
+        let sec = seconds < 10 ? "0" + seconds : seconds;
+        let min = minutes < 10 ? "0" + minutes : minutes;
+        document.getElementById("time").innerText = `${min}:${sec}`;
+      }
+
+      function start() {
+        if (timer !== null) return;
+        timer = setInterval(() => {
+          if (seconds === 0) {
+            if (minutes === 0) {
+              clearInterval(timer);
+              timer = null;
+              alert("Long break over!");
+              window.open("promodoro.html", "_self");
+              return;
+            }
+            minutes--;
+            seconds = 59;
+          } else {
+            seconds--;
+          }
+          updateTime();
+        }, 1000);
+      }
+
+      function stop() {
+        clearInterval(timer);
+        timer = null;
+      }
+
+      updateTime();
+    </script>
+  </body>
+</html>
